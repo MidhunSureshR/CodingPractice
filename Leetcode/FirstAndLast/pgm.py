@@ -6,7 +6,7 @@ class Solution:
         return (lb + ub) // 2
 
     def binary_search(self, array, key):
-        lb, ub = 0, len(array)-1
+        lb, ub= 0, len(array)-1
         while lb <= ub:
             mid = self.middle(lb, ub)
             if array[mid] == key:
@@ -16,6 +16,7 @@ class Solution:
             else:
                 ub = mid - 1
         return -1
+
     
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         initial = self.binary_search(nums, target)
@@ -24,16 +25,16 @@ class Solution:
 
         # Find start and end
         min = max = initial
-        while True:
-            x = self.binary_search(nums[0:min], target)
-            if x == -1:  
-                break      
-            min = x
-        while True:
+        x = None
+
+        while x != -1:
+            x = self.binary_search(nums[0:min], target)     
+            min = x if x != -1 else min
+
+        while x != -1:
             x = self.binary_search(nums[max+1:], target)
-            if x == -1:
-                break
-            min = x
+            min = x if x != -1 else min
+        
         return [min, max]        
     
 
